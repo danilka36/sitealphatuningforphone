@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALPHA GS MOBILE CONFIG</title>
+    <title>ALPHA GS // EXHAUST GEOMETRY</title>
     <style>
         :root {
             --bg-garage: #121110;      
@@ -20,35 +20,34 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Принудительно сбрасываем старый макет */
         body {
-            background-color: var(--bg-garage) !important;
-            color: var(--text-main) !important;
-            min-height: 100vh !important;
-            width: 100vw !important;
-            display: flex !important;
-            flex-direction: column !important;
-            overflow-x: hidden !important;
-            padding: 0 !important;
+            background-color: var(--bg-garage);
+            color: var(--text-main);
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* ВЕРХНЯЯ ЧАСТЬ ЭКРАНА С МОПЕДОМ */
-        .mobile-top-stage {
-            width: 100% !important;
-            height: 35vh !important;
-            background: #1a1817 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 10px !important;
-            border-bottom: 1px solid rgba(168, 146, 130, 0.2) !important;
+        .bike-stage {
+            width: 100%;
+            height: 38vh;
+            background: linear-gradient(to bottom, #1a1817, var(--bg-garage));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(168, 146, 130, 0.15);
+            position: fixed;
+            top: 0; left: 0; z-index: 100;
         }
 
-        .m-title h1 {
+        .stage-header h1 {
             font-size: 1.1em;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: var(--accent-dark);
             text-align: center;
         }
@@ -59,63 +58,64 @@
             font-weight: 700;
             text-transform: uppercase;
             text-align: center;
+            margin-top: 2px;
         }
 
-        .m-images-box {
-            position: relative;
+        .svg-container {
             width: 100%;
-            height: 130px;
+            height: 190px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 5px;
         }
 
-        .bike-layer {
-            position: absolute;
-            max-width: 85%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        #layer-body { z-index: 3; transition: filter 0.3s ease; }
-        #layer-base { z-index: 2; }
-
-        /* ОДНА ЕДИНСТВЕННАЯ ЛЕНТА ТЮНИНГА СНИЗУ */
-        .mobile-bottom-scroll {
-            width: 100% !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 15px !important;
-            padding: 15px !important;
-            background: var(--bg-garage) !important;
+        .svg-container svg {
+            width: 95%;
+            height: 100%;
         }
 
-        .m-block {
-            width: 100% !important;
+        .paintable {
+            transition: fill 0.3s ease, stroke 0.3s ease;
+        }
+
+        .scroll-panel {
+            margin-top: 38vh;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: var(--bg-garage);
+        }
+
+        .section-block {
+            width: 100%;
             background: var(--panel-bg);
             border: 1px solid rgba(168, 146, 130, 0.15);
-            border-radius: 14px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 14px;
         }
 
-        .m-subtitle {
+        .section-subtitle {
             font-size: 0.75em;
             font-weight: 800;
             text-transform: uppercase;
             color: var(--accent-coffee);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
-        /* Горизонтальная прокрутка кнопок */
-        .m-row-scroll {
-            display: flex !important;
-            gap: 8px !important;
-            overflow-x: auto !important;
-            padding-bottom: 6px !important;
+        .horizontal-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .btn-tuning {
-            flex: 0 0 auto !important;
+            flex: 0 0 auto;
             background: #1f1d1c;
             border: 1px solid rgba(168, 146, 130, 0.15);
             padding: 10px 16px;
@@ -126,12 +126,12 @@
         }
 
         .btn-tuning.active {
-            background: var(--accent-coffee) !important;
-            color: #000 !important;
-            border-color: var(--accent-coffee) !important;
+            background: var(--accent-coffee);
+            color: #000;
+            border-color: var(--accent-coffee);
         }
 
-        .m-engine-list {
+        .engine-list {
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -141,7 +141,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 12px 14px;
             background: #1f1d1c;
             border: 1px solid rgba(168, 146, 130, 0.15);
             border-radius: 10px;
@@ -155,75 +155,154 @@
             color: #000;
         }
 
+        .color-picker-grid {
+            display: flex;
+            gap: 15px;
+        }
+
         .btn-color {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid rgba(255,255,255,0.15);
-            margin-right: 10px;
         }
         .btn-color.active { border-color: #fff; }
 
-        /* Статы */
-        .stat-group { margin-bottom: 8px; }
-        .stat-label-row { display: flex; justify-content: space-between; font-size: 0.75em; font-weight: 700; margin-bottom: 3px; text-transform: uppercase; }
+        .stat-group { margin-bottom: 10px; }
+        .stat-label-row { display: flex; justify-content: space-between; font-size: 0.75em; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
         .stat-value { color: var(--accent-dark); font-weight: 800; }
-        .bar-container { width: 100%; height: 5px; background: rgba(168, 146, 130, 0.1); border-radius: 3px; overflow: hidden; }
-        .bar-fill { height: 100%; background: var(--accent-coffee); width: 50%; }
-        .info-box { background: rgba(31, 29, 28, 0.6); border-radius: 8px; padding: 10px; font-size: 0.75em; line-height: 1.4; color: #c4b9b0; border-left: 3px solid var(--accent-coffee); }
+        .bar-container { width: 100%; height: 6px; background: rgba(168, 146, 130, 0.1); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--accent-coffee); width: 50%; transition: width 0.3s ease; }
+        .info-box { background: rgba(31, 29, 28, 0.6); border-radius: 10px; padding: 12px; font-size: 0.78em; line-height: 1.4; color: #c4b9b0; border-left: 3px solid var(--accent-coffee); }
     </style>
 </head>
 <body>
 
-    <div class="mobile-top-stage">
-        <div class="m-title">
-            <h1>ALPHA GS GARAGE</h1>
+    <div class="bike-stage">
+        <div class="stage-header">
+            <h1>ALPHA GS CONFIGURATOR</h1>
             <div id="display-engine-name">Сток 125cc</div>
         </div>
-        <div class="m-images-box">
-            <img src="alpha_base.png" id="layer-base" class="bike-layer" alt="Base">
-            <img src="alpha_body.png" id="layer-body" class="bike-layer" alt="Body">
+
+        <div class="svg-container">
+            <svg viewBox="0 0 600 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70 240 C 70 160, 160 160, 185 190" stroke="#b0b0b0" stroke-width="5" fill="none" />
+                <circle cx="130" cy="240" r="62" stroke="#1c1a19" stroke-width="20" />
+                <circle cx="130" cy="240" r="62" stroke="#333" stroke-width="3" stroke-dasharray="6 4" id="tire-rear" />
+                <path d="M130 240 L85 200 M130 240 L175 280 M130 240 L85 280 M130 240 L175 200 M130 240 L130 178 M130 240 L130 302" stroke="#444" stroke-width="4" />
+                <circle cx="130" cy="240" r="25" fill="#555" stroke="#333" stroke-width="2" />
+
+                <circle cx="470" cy="240" r="62" stroke="#1c1a19" stroke-width="20" />
+                <circle cx="470" cy="240" r="62" stroke="#333" stroke-width="3" stroke-dasharray="6 4" id="tire-front" />
+                <path d="M470 240 L425 200 M470 240 L515 280 M470 240 L425 280 M470 240 L515 200 M470 240 L470 178 M470 240 L470 302" stroke="#444" stroke-width="4" />
+                <circle cx="470" cy="240" r="25" fill="#555" stroke="#333" stroke-width="2" />
+                <path d="M425 200 C 440 170, 495 170, 510 205" stroke="#b0b0b0" stroke-width="5" fill="none" />
+
+                <path d="M130 240 L240 235 M240 235 L420 120" stroke="#222" stroke-width="16" stroke-linecap="round" />
+                <path d="M130 240 L240 235" stroke="#333" stroke-width="8" />
+                <path d="M145 235 L200 155" stroke="#b0b0b0" stroke-width="7" stroke-linecap="round" />
+                <path d="M145 235 L200 155" stroke="#000" stroke-width="5" stroke-dasharray="3 3" />
+
+                <rect x="250" y="215" width="70" height="50" rx="10" fill="#444" stroke="#222" stroke-width="3" />
+                <circle cx="270" cy="240" r="16" fill="#555" />
+                <rect x="315" y="222" width="60" height="38" rx="4" fill="#3a3a3a" stroke="#222" stroke-width="2" />
+                <path d="M325 222 V260 M335 222 V260 M345 222 V260 M355 222 V260 M365 222 V260" stroke="#222" stroke-width="2" />
+                <path d="M255 245 L240 275 L225 270" stroke="#888" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                <path d="M420 120 L470 240" stroke="#222" stroke-width="8" />
+                <path d="M425 130 L445 180" stroke="#111" stroke-width="12" stroke-dasharray="2 2" />
+                <path d="M445 180 L468 235" stroke="#b0b0b0" stroke-width="8" />
+
+                <path d="M170 158 C 210 154, 250 152, 290 162 L 290 180 L 170 178 Z" fill="#181818" stroke="#000" stroke-width="2" />
+                <path d="M170 158 L 195 159" stroke="#fff" stroke-width="2" opacity="0.4" />
+                <path d="M170 165 L135 168 L130 180 H170" stroke="#b0b0b0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+
+                <path d="M210 178 H292 L285 220 L212 215 Z" fill="#4a1219" stroke="#2d050c" stroke-width="2" class="paintable" id="v-panel" />
+                <path d="M285 165 C 290 135, 340 120, 395 124 C 425 127, 428 152, 400 172 C 370 188, 310 185, 285 165 Z" fill="#4a1219" stroke="#2d050c" stroke-width="2" class="paintable" id="v-tank" />
+                <path d="M325 130 C350 124, 385 126, 405 136" stroke="#fff" stroke-width="3" opacity="0.25" stroke-linecap="round" /> 
+                <path d="M335 156 C350 148, 375 150, 382 163 C370 173, 345 172, 335 156 Z" fill="#222" opacity="0.75" />
+
+                <path d="M320 250 C340 275, 380 275, 410 275 L260 275" stroke="#222" stroke-width="6" stroke-linecap="round" />
+
+                <g id="exhaust-system">
+                    
+                    <g id="ex-stock" display="inline" transform="translate(-160, -78) scale(1, 1.6)">
+                        <path d="M421.432 227L272.5 209.5V213.5L421.432 232V227Z" fill="#7a7a7a" stroke="#404040" stroke-width="1.5"/>
+                    </g>
+                    
+                    <g id="ex-sc" display="none" transform="translate(-87, -42) scale(0.8, 1.45)">
+                        <path d="M403 227L363 214.5L364 211.5L404 223.5V227Z" fill="#A8A8A8" stroke="black"/>
+                        <path d="M363.36 214.3L273.5 204.5V215.5L363.36 223.834V214.3Z" fill="#606060" stroke="black"/>
+                        <path d="M309 209.5L307.5 211.5L311.5 212L312.5 210L309 209.5Z" fill="#3A3A3A"/>
+                        <path d="M315.5 210.5L314 212.5L318 213L319 211L315.5 210.5Z" fill="#3A3A3A"/>
+                        <path d="M322 211L320.5 213L324.5 213.5L325.5 211.5L322 211Z" fill="#3A3A3A"/>
+                        <path d="M273.5 204.5L267.5 206V213.5L273.5 215.5V204.5Z" fill="#2B2B2B" stroke="black"/>
+                    </g>
+                    
+                    <g id="ex-akrapovic" display="none" transform="translate(-145, 59)">
+                        <path d="M406 216L384.5 209.5L386 205.5L407.5 211.5L406 216Z" fill="#A8A8A8" stroke="black"/>
+                        <path d="M384.974 209.644L275.5 197.5V218.5L384.974 223.356V209.644Z" fill="#3A3A3A" stroke="black"/>
+                        <path d="M275.5 197.5L263 201V213.5L275.5 218.5V197.5Z" fill="#1E1E1E" stroke="black"/>
+                        <path d="M298.5 201L292.5 218.5" stroke="#A1A1A1" stroke-width="2"/>
+                    </g>
+
+                </g>
+
+                <g id="headlight-group">
+                    <path d="M424 125 H438" stroke="#111" stroke-width="4" />
+                    <path d="M444 116 C 434 116, 434 140, 444 140 Z" fill="#1e1c1b" stroke="#333" stroke-width="1.5" />
+                    <path d="M444 116 C 453 116, 453 140, 444 140" fill="#fef08a" fill-opacity="0.3" stroke="#eab308" stroke-width="2" stroke-linecap="round" />
+                    <path d="M446 122 C 450 124, 450 132, 446 134" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity="0.9" />
+                </g>
+
+                <g id="handlebar-group">
+                    <path d="M420 120 L415 80" stroke="#b0b0b0" stroke-width="4" stroke-linecap="round" />
+                    <path d="M415 80 C412 74, 405 73, 395 74" stroke="#b0b0b0" stroke-width="4" fill="none" stroke-linecap="round" />
+                    <path d="M395 74 L375 75" stroke="#111" stroke-width="7" stroke-linecap="round" />
+                </g>
+            </svg>
         </div>
     </div>
 
-    <div class="mobile-bottom-scroll">
+    <div class="scroll-panel">
         
-        <div class="m-block">
+        <div class="section-block">
             <div class="stat-group">
                 <div class="stat-label-row"><div>Скорость</div><div class="stat-value" id="val-speed">~85 км/ч</div></div>
                 <div class="bar-container"><div class="bar-fill" id="bar-speed"></div></div>
             </div>
-            <div class="stat-group" style="margin-bottom: 10px;">
-                <div class="stat-label-row"><div>Подрыв</div><div class="stat-value" id="val-torque">Средняя</div></div>
+            <div class="stat-group" style="margin-bottom: 12px;">
+                <div class="stat-label-row"><div>Тяга / Момент</div><div class="stat-value" id="val-torque">Средняя</div></div>
                 <div class="bar-container"><div class="bar-fill" id="bar-torque"></div></div>
             </div>
-            <div class="info-box" id="config-desc">Загрузка данных...</div>
+            <div class="info-box" id="config-desc">Расчет параметров...</div>
         </div>
 
-        <div class="m-block">
-            <div class="m-subtitle">Цвет пластика и бака</div>
-            <div style="display: flex;">
-                <button class="btn-color active" style="background: #801818;" onclick="changeBodyColor('none', this)"></button>
-                <button class="btn-color" style="background: #facc15;" onclick="changeBodyColor('hue-rotate(300deg) saturate(2.5) brightness(1.2)', this)"></button>
-                <button class="btn-color" style="background: #1d4ed8;" onclick="changeBodyColor('hue-rotate(190deg) saturate(1.8)', this)"></button>
-                <button class="btn-color" style="background: #1a1a1a;" onclick="changeBodyColor('grayscale(1) brightness(0.3)', this)"></button>
+        <div class="section-block">
+            <div class="section-subtitle">Цвет глянца (Бак и Бардачок)</div>
+            <div class="color-picker-grid">
+                <button class="btn-color active" style="background: #4a1219;" onclick="setVectorColor('#4a1219', '#2d050c', this)"></button>
+                <button class="btn-color" style="background: #801818;" onclick="setVectorColor('#801818', '#5a0f0f', this)"></button>
+                <button class="btn-color" style="background: #facc15;" onclick="setVectorColor('#facc15', '#cab013', this)"></button>
+                <button class="btn-color" style="background: #1d4ed8;" onclick="setVectorColor('#1d4ed8', '#1239a3', this)"></button>
+                <button class="btn-color" style="background: #1e1e1e;" onclick="setVectorColor('#1e1e1e', '#0f0f0f', this)"></button>
             </div>
         </div>
 
-        <div class="m-block">
-            <div class="m-subtitle">Выбор мотора</div>
-            <div class="m-engine-list">
-                <button class="btn-engine active" onclick="setEngine('stock_125', this)"><span>Сток 125cc</span></button>
-                <button class="btn-engine" onclick="setEngine('zongshen_140', this)"><span>Zongshen 140cc</span></button>
-                <button class="btn-engine" onclick="setEngine('daytona_140', this)"><span>Daytona 140cc</span></button>
-                <button class="btn-engine" onclick="setEngine('zongshen_190', this)"><span>Zongshen 190cc</span></button>
-                <button class="btn-engine" onclick="setEngine('daytona_190', this)"><span>Daytona 190cc</span></button>
+        <div class="section-block">
+            <div class="section-subtitle">Свап Двигателя</div>
+            <div class="engine-list">
+                <button class="btn-engine active" onclick="setEngine('stock_125', this)"><span>Сток 125cc</span><span class="engine-brand">Alpha</span></button>
+                <button class="btn-engine" onclick="setEngine('zongshen_140', this)"><span>Zongshen 140cc</span><span class="engine-brand">ZS-Power</span></button>
+                <button class="btn-engine" onclick="setEngine('daytona_140', this)"><span>Daytona 140cc</span><span class="engine-brand">Anima</span></button>
+                <button class="btn-engine" onclick="setEngine('zongshen_190', this)"><span>Zongshen 190cc</span><span class="engine-brand">1P62YML</span></button>
+                <button class="btn-engine" onclick="setEngine('daytona_190', this)"><span>Daytona 190cc</span><span class="engine-brand">Anima 4V</span></button>
             </div>
         </div>
 
-        <div class="m-block">
-            <div class="m-subtitle">Карбюратор</div>
-            <div class="m-row-scroll">
+        <div class="section-block">
+            <div class="section-subtitle">Карбюратор (Диффузор)</div>
+            <div class="horizontal-scroll">
                 <button class="btn-tuning carb-btn active" onclick="setCarb(19)">PZ 19</button>
                 <button class="btn-tuning carb-btn" onclick="setCarb(22)">PZ 22</button>
                 <button class="btn-tuning carb-btn" onclick="setCarb(24)">PZ 24</button>
@@ -232,9 +311,9 @@
             </div>
         </div>
 
-        <div class="m-block">
-            <div class="m-subtitle">Ведущая звезда</div>
-            <div class="m-row-scroll">
+        <div class="section-block">
+            <div class="section-subtitle">Ведущая звезда (Перед)</div>
+            <div class="horizontal-scroll">
                 <button class="btn-tuning front-sprocket-btn" onclick="setFrontSprocket(13)">13T</button>
                 <button class="btn-tuning front-sprocket-btn active" onclick="setFrontSprocket(14)">14T</button>
                 <button class="btn-tuning front-sprocket-btn" onclick="setFrontSprocket(15)">15T</button>
@@ -242,9 +321,9 @@
             </div>
         </div>
 
-        <div class="m-block">
-            <div class="m-subtitle">Ведомая звезда</div>
-            <div class="m-row-scroll">
+        <div class="section-block">
+            <div class="section-subtitle">Ведомая звезда (Зад)</div>
+            <div class="horizontal-scroll">
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(36)">36T</button>
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(37)">37T</button>
                 <button class="btn-tuning rear-sprocket-btn active" onclick="setRearSprocket(38)">38T</button>
@@ -252,26 +331,170 @@
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(40)">40T</button>
             </div>
         </div>
+
+        <div class="section-block">
+            <div class="section-subtitle">Тип Покрышек</div>
+            <div class="horizontal-scroll">
+                <button class="btn-tuning tires-btn active" onclick="setTires('stock')">Обычные</button>
+                <button class="btn-tuning tires-btn" onclick="setTires('road')">Дорожные слики</button>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-subtitle">Выхлопная система</div>
+            <div class="horizontal-scroll">
+                <button class="btn-tuning exhaust-btn active" onclick="setExhaust('stock')">Сток</button>
+                <button class="btn-tuning exhaust-btn" onclick="setExhaust('akrapovic')">Akrapovič</button>
+                <button class="btn-tuning exhaust-btn" onclick="setExhaust('sc_project')">SC Project</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        let currentEngine = 'stock_125'; let frontSprocket = 14; let rearSprocket = 38; let currentCarb = 19;
+        let currentEngine = 'stock_125'; let frontSprocket = 14; let rearSprocket = 38;
+        let currentCarb = 19; let currentTires = 'stock'; let currentExhaust = 'stock';
+
         const wrenchAudio = new Audio('гайковерт.MP3');
         function playWrenchSound() { wrenchAudio.currentTime = 0; wrenchAudio.play().catch(e => console.log(e)); }
-        function changeBodyColor(f, el) { playWrenchSound(); document.getElementById('layer-body').style.filter = f; document.querySelectorAll('.btn-color').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
-        function setEngine(type, el) { playWrenchSound(); currentEngine = type; document.querySelectorAll('.btn-engine').forEach(b => b.classList.remove('active')); el.classList.add('active'); document.getElementById('display-engine-name').innerText = type; recalculate(); }
-        function setCarb(s) { playWrenchSound(); currentCarb = s; updateUI('.carb-btn', 'PZ ' + s); recalculate(); }
-        function setFrontSprocket(t) { playWrenchSound(); frontSprocket = t; updateUI('.front-sprocket-btn', t + 'T'); recalculate(); }
-        function setRearSprocket(t) { playWrenchSound(); rearSprocket = t; updateUI('.rear-sprocket-btn', t + 'T'); recalculate(); }
-        function updateUI(c, txt) { document.querySelectorAll(c).forEach(b => { b.classList.remove('active'); if (b.innerText === txt) b.classList.add('active'); }); }
-        function recalculate() {
-            let speed = 85; let torque = 55; let txt = "";
-            if (currentEngine === 'stock_125') { txt = "<b>Топливо:</b> Родной PZ 19. Стабильный сток."; }
-            else { txt = "Мотор изменен. Требует настройки."; speed = 110; torque = 80; }
-            document.getElementById('val-speed').innerText = `~${speed} км/ч`;
-            document.getElementById('bar-speed').style.width = (speed/140)*100 + '%';
-            document.getElementById('config-desc').innerHTML = txt;
+
+        function setVectorColor(mainColor, strokeColor, element) {
+            playWrenchSound();
+            document.getElementById('v-tank').style.fill = mainColor;
+            document.getElementById('v-tank').style.stroke = strokeColor;
+            document.getElementById('v-panel').style.fill = mainColor;
+            document.getElementById('v-panel').style.stroke = strokeColor;
+            document.querySelectorAll('.btn-color').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
         }
+
+        function setEngine(engineType, element) {
+            playWrenchSound();
+            currentEngine = engineType;
+            document.querySelectorAll('.btn-engine').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            
+            let names = {
+                'stock_125': 'Сток 125cc', 'zongshen_140': 'Zongshen 140cc',
+                'daytona_140': 'Daytona 140cc', 'zongshen_190': 'Zongshen 190cc', 'daytona_190': 'Daytona 190cc'
+            };
+            document.getElementById('display-engine-name').innerText = names[engineType];
+            
+            if (engineType.includes('190') && currentExhaust === 'stock') {
+                currentExhaust = 'akrapovic';
+            }
+            recalculate();
+        }
+
+        function setCarb(size) { playWrenchSound(); currentCarb = size; updateUI('.carb-btn', 'PZ ' + size); recalculate(); }
+        function setFrontSprocket(teeth) { playWrenchSound(); frontSprocket = teeth; updateUI('.front-sprocket-btn', teeth + 'T'); recalculate(); }
+        function setRearSprocket(teeth) { playWrenchSound(); rearSprocket = teeth; updateUI('.rear-sprocket-btn', teeth + 'T'); recalculate(); }
+
+        function setTires(type) {
+            playWrenchSound(); currentTires = type;
+            updateUI('.tires-btn', type === 'stock' ? 'Обычные' : 'Дорожные слики');
+            const dashStyle = type === 'stock' ? '6 4' : 'none';
+            document.getElementById('tire-front').style.strokeDasharray = dashStyle;
+            document.getElementById('tire-rear').style.strokeDasharray = dashStyle;
+            recalculate();
+        }
+
+        function setExhaust(brand) {
+            playWrenchSound(); currentExhaust = brand;
+            recalculate();
+        }
+
+        function updateUI(className, activeText) {
+            document.querySelectorAll(className).forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText === activeText) btn.classList.add('active');
+            });
+        }
+
+        function recalculate() {
+            let baseSpeed = 85; let baseTorque = 55; let descParts = [];
+
+            let targetText = 'Сток';
+            if (currentExhaust === 'akrapovic') targetText = 'Akrapovič';
+            if (currentExhaust === 'sc_project') targetText = 'SC Project';
+            updateUI('.exhaust-btn', targetText);
+
+            document.getElementById('ex-stock').style.display = 'none';
+            document.getElementById('ex-sc').style.display = 'none';
+            document.getElementById('ex-akrapovic').style.display = 'none';
+
+            if (currentExhaust === 'stock') {
+                document.getElementById('ex-stock').style.display = 'inline';
+            } else if (currentExhaust === 'sc_project') {
+                document.getElementById('ex-sc').style.display = 'inline';
+            } else if (currentExhaust === 'akrapovic') {
+                document.getElementById('ex-akrapovic').style.display = 'inline';
+            }
+
+            switch(currentEngine) {
+                case 'stock_125': baseSpeed = 85; baseTorque = 55; break;
+                case 'zongshen_140': baseSpeed = 100; baseTorque = 75; break;
+                case 'daytona_140': baseSpeed = 105; baseTorque = 70; break;
+                case 'zongshen_190': baseSpeed = 115; baseTorque = 95; break;
+                case 'daytona_190': baseSpeed = 125; baseTorque = 90; break;
+            }
+
+            if (currentEngine === 'stock_125') {
+                if (currentCarb === 19) descParts.push("<b>Топливо:</b> Родной 19-й карб. Смесь стабильная, ровный запуск.");
+                else if (currentCarb === 22) { baseSpeed += 4; baseTorque += 2; descParts.push("<b>Топливо:</b> Диффузор 22. Лёгкий прирост. Движку легче на верхах."); }
+                else if (currentCarb === 24) { baseSpeed += 2; baseTorque -= 4; descParts.push("<b>Топливо:</b> Диффузор 24. Предельный размер. Появился затуп на низах."); }
+                else if (currentCarb >= 26) { baseSpeed -= 12; baseTorque -= 20; descParts.push("<b>Топливо:</b> Карб велик! Заливает, смесь переобогащенная, потеря мощности."); }
+            } else if (currentEngine.includes('140')) {
+                if (currentCarb <= 19) { baseSpeed -= 8; baseTorque -= 10; descParts.push("<b>Топливо:</b> 19-й карб душит мотор! Не хватает пропускной способности."); }
+                else if (currentCarb === 24) { baseSpeed += 5; baseTorque += 5; descParts.push("<b>Топливо:</b> 24-й карб — золотая середина для 140 кубов. Отличная продувка."); }
+                else descParts.push("<b>Топливо:</b> Конфиг рабочий, требует точной настройки жиклеров.");
+            } else if (currentEngine.includes('190')) {
+                if (currentCarb <= 22) { baseSpeed -= 20; baseTorque -= 25; descParts.push("<b>Топливо:</b> Диффузор мал! 190-й мотор голодает без смеси."); }
+                else if (currentCarb >= 26) { baseSpeed += 12; baseTorque += 15; descParts.push("<b>Топливо:</b> Топовый конфиг! Большой диффузор раскрывает 190 кубов на полную."); }
+            }
+
+            const currentRatio = rearSprocket / frontSprocket;
+            const stockRatio = 38 / 14;
+            const ratioDifference = currentRatio - stockRatio;
+            let sprocketSpeedModifier = currentEngine.includes('190') ? 45 : 35;
+
+            baseSpeed -= ratioDifference * sprocketSpeedModifier;
+            baseTorque += ratioDifference * 65;
+
+            if (currentTires === 'road') baseSpeed += 4;
+            
+            if (currentExhaust === 'akrapovic') { 
+                baseTorque += 7; baseSpeed += 4; 
+                descParts.push("<b>Выпуск:</b> Конический карбоновый Akrapovič даёт отличную продувку цилиндра и сочный басс.");
+            } else if (currentExhaust === 'sc_project') { 
+                baseTorque += 10; baseSpeed += 1; 
+                descParts.push("<b>Выпуск:</b> Короткий толстый прямоток SC Project обеспечивает бешеную тягу на средних оборотах.");
+            } else {
+                if(currentEngine.includes('140') || currentEngine.includes('190')) {
+                    baseSpeed -= 12; baseTorque -= 15;
+                    descParts.push("<b>Выпуск:</b> Внимание! Зауженный стоковый глушитель сильно зажимает газы мощного мотора.");
+                } else {
+                    descParts.push("<b>Выпуск:</b> Родной тихий глушитель Мопеда Альфа. Оптимально для стока.");
+                }
+            }
+
+            let torqueLabel = "Средняя";
+            if (baseTorque > 95) torqueLabel = "Избыточная (В космос)";
+            else if (baseTorque > 78) torqueLabel = "Сумасшедшая (В угол)";
+            else if (baseTorque > 60) torqueLabel = "Бодрая";
+            else if (baseTorque < 35) torqueLabel = "Захлёб / Провал";
+
+            let speedPercent = Math.min(Math.max((baseSpeed / 140) * 100, 10), 100); 
+            let torquePercent = Math.min(Math.max(baseTorque, 10), 100);
+
+            let finalSpeed = Math.round(baseSpeed);
+            document.getElementById('val-speed').innerText = `~${finalSpeed - 3} - ${finalSpeed + 3} км/ч`;
+            document.getElementById('val-torque').innerText = torqueLabel;
+            document.getElementById('bar-speed').style.width = speedPercent + '%';
+            document.getElementById('bar-torque').style.width = torquePercent + '%';
+            document.getElementById('config-desc').innerHTML = descParts.join('<br><br>');
+        }
+
         recalculate();
     </script>
 </body>
