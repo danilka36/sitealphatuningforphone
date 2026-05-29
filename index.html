@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALPHA GS CONFIGURATOR // MOBILE FIX</title>
+    <title>ALPHA GS MOBILE CONFIG</title>
     <style>
         :root {
             --bg-garage: #121110;      
@@ -16,40 +16,41 @@
         * {
             box-sizing: border-box;
             margin: 0; padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Принудительно сбрасываем старый макет */
         body {
-            background-color: var(--bg-garage);
-            color: var(--text-main);
-            min-height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            background-color: var(--bg-garage) !important;
+            color: var(--text-main) !important;
+            min-height: 100vh !important;
+            width: 100vw !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow-x: hidden !important;
+            padding: 0 !important;
         }
 
-        /* ЗОНА С МОПЕДОМ (ТЕПЕРЬ СТРОГО ФИКСИРОВАННАЯ ВЕРТИКАЛЬНАЯ СТРУКТУРА) */
-        .bike-stage {
-            width: 100%;
-            height: 35vh; /* Ограничиваем высоту картинки, чтобы не жрала весь экран */
-            background: linear-gradient(to bottom, #1a1817, var(--bg-garage));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid rgba(168, 146, 130, 0.15);
+        /* ВЕРХНЯЯ ЧАСТЬ ЭКРАНА С МОПЕДОМ */
+        .mobile-top-stage {
+            width: 100% !important;
+            height: 35vh !important;
+            background: #1a1817 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 10px !important;
+            border-bottom: 1px solid rgba(168, 146, 130, 0.2) !important;
         }
 
-        .stage-header h1 {
-            font-size: 1em;
+        .m-title h1 {
+            font-size: 1.1em;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             color: var(--accent-dark);
             text-align: center;
-            text-transform: uppercase;
         }
 
         #display-engine-name {
@@ -58,13 +59,12 @@
             font-weight: 700;
             text-transform: uppercase;
             text-align: center;
-            margin-top: 2px;
         }
 
-        .images-container {
+        .m-images-box {
             position: relative;
             width: 100%;
-            height: 140px; /* Ужали высоту под экран телефона */
+            height: 130px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,56 +77,45 @@
             max-height: 100%;
             object-fit: contain;
         }
-
-        #layer-body {
-            z-index: 3;
-            transition: filter 0.3s ease;
-        }
+        #layer-body { z-index: 3; transition: filter 0.3s ease; }
         #layer-base { z-index: 2; }
 
-
-        /* ЕДИНАЯ СТРОГАЯ КОЛОНКА ТЮНИНГА СНИЗУ */
-        .scroll-panel {
-            width: 100%;
-            padding: 15px;
-            display: flex;
-            flex-direction: column; /* Никаких боковых столбов, только сверху вниз! */
-            gap: 15px;
-            background: var(--bg-garage);
+        /* ОДНА ЕДИНСТВЕННАЯ ЛЕНТА ТЮНИНГА СНИЗУ */
+        .mobile-bottom-scroll {
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+            padding: 15px !important;
+            background: var(--bg-garage) !important;
         }
 
-        .section-block {
-            width: 100%;
+        .m-block {
+            width: 100% !important;
             background: var(--panel-bg);
             border: 1px solid rgba(168, 146, 130, 0.15);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 14px;
+            padding: 12px;
         }
 
-        .section-subtitle {
+        .m-subtitle {
             font-size: 0.75em;
             font-weight: 800;
             text-transform: uppercase;
             color: var(--accent-coffee);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        /* Удобный горизонтальный скролл кнопок (листаются пальцем влево-вправо внутри блока) */
-        .horizontal-scroll {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .horizontal-scroll::-webkit-scrollbar {
-            height: 2px;
+        /* Горизонтальная прокрутка кнопок */
+        .m-row-scroll {
+            display: flex !important;
+            gap: 8px !important;
+            overflow-x: auto !important;
+            padding-bottom: 6px !important;
         }
 
         .btn-tuning {
-            flex: 0 0 auto; /* Не дает кнопкам сжиматься в сопли */
+            flex: 0 0 auto !important;
             background: #1f1d1c;
             border: 1px solid rgba(168, 146, 130, 0.15);
             padding: 10px 16px;
@@ -137,13 +126,12 @@
         }
 
         .btn-tuning.active {
-            background: var(--accent-coffee);
-            color: #000;
-            border-color: var(--accent-coffee);
+            background: var(--accent-coffee) !important;
+            color: #000 !important;
+            border-color: var(--accent-coffee) !important;
         }
 
-        /* Компактный список движков */
-        .engine-list {
+        .m-engine-list {
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -153,7 +141,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 14px;
+            padding: 12px;
             background: #1f1d1c;
             border: 1px solid rgba(168, 146, 130, 0.15);
             border-radius: 10px;
@@ -165,118 +153,56 @@
         .btn-engine.active {
             background: var(--accent-coffee);
             color: #000;
-            border-color: var(--accent-coffee);
-        }
-
-        .btn-engine .engine-brand {
-            font-size: 0.7em;
-            text-transform: uppercase;
-            opacity: 0.6;
-        }
-
-        /* Кружки цветов */
-        .color-picker-grid {
-            display: flex;
-            gap: 12px;
         }
 
         .btn-color {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             border: 2px solid rgba(255,255,255,0.15);
+            margin-right: 10px;
         }
-
-        .btn-color.active {
-            border-color: #fff;
-        }
+        .btn-color.active { border-color: #fff; }
 
         /* Статы */
-        .stat-group {
-            margin-bottom: 10px;
-        }
-
-        .stat-label-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75em;
-            font-weight: 700;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .stat-value {
-            color: var(--accent-dark);
-            font-weight: 800;
-        }
-
-        .bar-container {
-            width: 100%;
-            height: 5px;
-            background: rgba(168, 146, 130, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background: var(--accent-coffee);
-            width: 50%;
-            transition: width 0.3s ease;
-        }
-
-        .info-box {
-            background: rgba(31, 29, 28, 0.6);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 0.75em;
-            line-height: 1.4;
-            color: #c4b9b0;
-            border-left: 3px solid var(--accent-coffee);
-        }
+        .stat-group { margin-bottom: 8px; }
+        .stat-label-row { display: flex; justify-content: space-between; font-size: 0.75em; font-weight: 700; margin-bottom: 3px; text-transform: uppercase; }
+        .stat-value { color: var(--accent-dark); font-weight: 800; }
+        .bar-container { width: 100%; height: 5px; background: rgba(168, 146, 130, 0.1); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--accent-coffee); width: 50%; }
+        .info-box { background: rgba(31, 29, 28, 0.6); border-radius: 8px; padding: 10px; font-size: 0.75em; line-height: 1.4; color: #c4b9b0; border-left: 3px solid var(--accent-coffee); }
     </style>
 </head>
 <body>
 
-    <!-- ВЕРХ: КАРТИНКА И НАЗВАНИЕ -->
-    <div class="bike-stage">
-        <div class="stage-header">
+    <div class="mobile-top-stage">
+        <div class="m-title">
             <h1>ALPHA GS GARAGE</h1>
             <div id="display-engine-name">Сток 125cc</div>
         </div>
-
-        <div class="images-container">
-            <img src="alpha_base.png" id="layer-base" class="bike-layer" alt="Alpha Base">
-            <img src="alpha_body.png" id="layer-body" class="bike-layer" alt="Alpha Body">
+        <div class="m-images-box">
+            <img src="alpha_base.png" id="layer-base" class="bike-layer" alt="Base">
+            <img src="alpha_body.png" id="layer-body" class="bike-layer" alt="Body">
         </div>
     </div>
 
-    <!-- НИЗ: ВСЕ НАСТРОЙКИ СТРОГО В ОДИН СТОЛБЕЦ -->
-    <div class="scroll-panel">
+    <div class="mobile-bottom-scroll">
         
-        <!-- ХАРАКТЕРИСТИКИ -->
-        <div class="section-block">
+        <div class="m-block">
             <div class="stat-group">
-                <div class="stat-label-row">
-                    <div>Скорость</div>
-                    <div class="stat-value" id="val-speed">~85 км/ч</div>
-                </div>
+                <div class="stat-label-row"><div>Скорость</div><div class="stat-value" id="val-speed">~85 км/ч</div></div>
                 <div class="bar-container"><div class="bar-fill" id="bar-speed"></div></div>
             </div>
-            <div class="stat-group" style="margin-bottom: 12px;">
-                <div class="stat-label-row">
-                    <div>Подрыв / Момент</div>
-                    <div class="stat-value" id="val-torque">Средняя</div>
-                </div>
+            <div class="stat-group" style="margin-bottom: 10px;">
+                <div class="stat-label-row"><div>Подрыв</div><div class="stat-value" id="val-torque">Средняя</div></div>
                 <div class="bar-container"><div class="bar-fill" id="bar-torque"></div></div>
             </div>
             <div class="info-box" id="config-desc">Загрузка данных...</div>
         </div>
 
-        <!-- ВЫБОР ЦВЕТА -->
-        <div class="section-block">
-            <div class="section-subtitle">Цвет пластика и бака</div>
-            <div class="color-picker-grid">
+        <div class="m-block">
+            <div class="m-subtitle">Цвет пластика и бака</div>
+            <div style="display: flex;">
                 <button class="btn-color active" style="background: #801818;" onclick="changeBodyColor('none', this)"></button>
                 <button class="btn-color" style="background: #facc15;" onclick="changeBodyColor('hue-rotate(300deg) saturate(2.5) brightness(1.2)', this)"></button>
                 <button class="btn-color" style="background: #1d4ed8;" onclick="changeBodyColor('hue-rotate(190deg) saturate(1.8)', this)"></button>
@@ -284,32 +210,20 @@
             </div>
         </div>
 
-        <!-- ДВИГАТЕЛИ -->
-        <div class="section-block">
-            <div class="section-subtitle">Выбор мотора (Свап)</div>
-            <div class="engine-list">
-                <button class="btn-engine active" onclick="setEngine('stock_125', this)">
-                    <span>Сток 125cc</span> <span class="engine-brand">Alpha</span>
-                </button>
-                <button class="btn-engine" onclick="setEngine('zongshen_140', this)">
-                    <span>Zongshen 140cc</span> <span class="engine-brand">ZS-Power</span>
-                </button>
-                <button class="btn-engine" onclick="setEngine('daytona_140', this)">
-                    <span>Daytona 140cc</span> <span class="engine-brand">Anima Spec</span>
-                </button>
-                <button class="btn-engine" onclick="setEngine('zongshen_190', this)">
-                    <span>Zongshen 190cc</span> <span class="engine-brand">ZS 1P62YML</span>
-                </button>
-                <button class="btn-engine" onclick="setEngine('daytona_190', this)">
-                    <span>Daytona 190cc</span> <span class="engine-brand">Anima 4V</span>
-                </button>
+        <div class="m-block">
+            <div class="m-subtitle">Выбор мотора</div>
+            <div class="m-engine-list">
+                <button class="btn-engine active" onclick="setEngine('stock_125', this)"><span>Сток 125cc</span></button>
+                <button class="btn-engine" onclick="setEngine('zongshen_140', this)"><span>Zongshen 140cc</span></button>
+                <button class="btn-engine" onclick="setEngine('daytona_140', this)"><span>Daytona 140cc</span></button>
+                <button class="btn-engine" onclick="setEngine('zongshen_190', this)"><span>Zongshen 190cc</span></button>
+                <button class="btn-engine" onclick="setEngine('daytona_190', this)"><span>Daytona 190cc</span></button>
             </div>
         </div>
 
-        <!-- КАРБЮРАТОР -->
-        <div class="section-block">
-            <div class="section-subtitle">Карбюратор (Диффузор)</div>
-            <div class="horizontal-scroll">
+        <div class="m-block">
+            <div class="m-subtitle">Карбюратор</div>
+            <div class="m-row-scroll">
                 <button class="btn-tuning carb-btn active" onclick="setCarb(19)">PZ 19</button>
                 <button class="btn-tuning carb-btn" onclick="setCarb(22)">PZ 22</button>
                 <button class="btn-tuning carb-btn" onclick="setCarb(24)">PZ 24</button>
@@ -318,10 +232,9 @@
             </div>
         </div>
 
-        <!-- ЗВЕЗДЫ ПЕРЕДНИЕ -->
-        <div class="section-block">
-            <div class="section-subtitle">Ведущая звезда</div>
-            <div class="horizontal-scroll">
+        <div class="m-block">
+            <div class="m-subtitle">Ведущая звезда</div>
+            <div class="m-row-scroll">
                 <button class="btn-tuning front-sprocket-btn" onclick="setFrontSprocket(13)">13T</button>
                 <button class="btn-tuning front-sprocket-btn active" onclick="setFrontSprocket(14)">14T</button>
                 <button class="btn-tuning front-sprocket-btn" onclick="setFrontSprocket(15)">15T</button>
@@ -329,10 +242,9 @@
             </div>
         </div>
 
-        <!-- ЗВЕЗДЫ ЗАДНИЕ -->
-        <div class="section-block">
-            <div class="section-subtitle">Ведомая звезда</div>
-            <div class="horizontal-scroll">
+        <div class="m-block">
+            <div class="m-subtitle">Ведомая звезда</div>
+            <div class="m-row-scroll">
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(36)">36T</button>
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(37)">37T</button>
                 <button class="btn-tuning rear-sprocket-btn active" onclick="setRearSprocket(38)">38T</button>
@@ -340,194 +252,26 @@
                 <button class="btn-tuning rear-sprocket-btn" onclick="setRearSprocket(40)">40T</button>
             </div>
         </div>
-
-        <!-- РЕЗИНА -->
-        <div class="section-block">
-            <div class="section-subtitle">Покрышки</div>
-            <div class="horizontal-scroll">
-                <button class="btn-tuning tires-btn active" onclick="setTires('stock')">Сток (Шипы)</button>
-                <button class="btn-tuning tires-btn" onclick="setTires('road')">Слики (Дорожные)</button>
-            </div>
-        </div>
-
-        <!-- ВЫХЛОП -->
-        <div class="section-block">
-            <div class="section-subtitle">Выхлопная система</div>
-            <div class="horizontal-scroll">
-                <button class="btn-tuning exhaust-btn active" onclick="setExhaust('stock')">Сток глушитель</button>
-                <button class="btn-tuning exhaust-btn" onclick="setExhaust('akrapovic')">Akrapovič</button>
-                <button class="btn-tuning exhaust-btn" onclick="setExhaust('sc_project')">SC Project</button>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        let currentEngine = 'stock_125';
-        let frontSprocket = 14;
-        let rearSprocket = 38;
-        let currentCarb = 19;
-        let currentTires = 'stock';
-        let currentExhaust = 'stock';
-
+        let currentEngine = 'stock_125'; let frontSprocket = 14; let rearSprocket = 38; let currentCarb = 19;
         const wrenchAudio = new Audio('гайковерт.MP3');
-
-        function playWrenchSound() {
-            wrenchAudio.currentTime = 0;
-            wrenchAudio.play().catch(e => console.log(e));
-        }
-
-        function changeBodyColor(filterValue, element) {
-            playWrenchSound();
-            document.getElementById('layer-body').style.filter = filterValue;
-            document.querySelectorAll('.btn-color').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        function setEngine(engineType, element) {
-            playWrenchSound();
-            currentEngine = engineType;
-            document.querySelectorAll('.btn-engine').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-            
-            let names = {
-                'stock_125': 'Сток 125cc',
-                'zongshen_140': 'Zongshen 140cc',
-                'daytona_140': 'Daytona 140cc',
-                'zongshen_190': 'Zongshen 190cc',
-                'daytona_190': 'Daytona 190cc'
-            };
-            document.getElementById('display-engine-name').innerText = names[engineType];
-            recalculate();
-        }
-
-        function setCarb(size) {
-            playWrenchSound();
-            currentCarb = size;
-            updateUI('.carb-btn', 'PZ ' + size);
-            recalculate();
-        }
-
-        function setFrontSprocket(teeth) {
-            playWrenchSound();
-            frontSprocket = teeth;
-            updateUI('.front-sprocket-btn', teeth + 'T');
-            recalculate();
-        }
-
-        function setRearSprocket(teeth) {
-            playWrenchSound();
-            rearSprocket = teeth;
-            updateUI('.rear-sprocket-btn', teeth + 'T');
-            recalculate();
-        }
-
-        function setTires(type) {
-            playWrenchSound();
-            currentTires = type;
-            updateUI('.tires-btn', type === 'stock' ? 'Сток (Шипы)' : 'Слики (Дорожные)');
-            recalculate();
-        }
-
-        function setExhaust(brand) {
-            playWrenchSound();
-            currentExhaust = brand;
-            let targetText = 'Сток глушитель';
-            if (brand === 'akrapovic') targetText = 'Akrapovič';
-            if (brand === 'sc_project') targetText = 'SC Project';
-            updateUI('.exhaust-btn', targetText);
-            recalculate();
-        }
-
-        function updateUI(className, activeText) {
-            document.querySelectorAll(className).forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.innerText === activeText) btn.classList.add('active');
-            });
-        }
-
+        function playWrenchSound() { wrenchAudio.currentTime = 0; wrenchAudio.play().catch(e => console.log(e)); }
+        function changeBodyColor(f, el) { playWrenchSound(); document.getElementById('layer-body').style.filter = f; document.querySelectorAll('.btn-color').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
+        function setEngine(type, el) { playWrenchSound(); currentEngine = type; document.querySelectorAll('.btn-engine').forEach(b => b.classList.remove('active')); el.classList.add('active'); document.getElementById('display-engine-name').innerText = type; recalculate(); }
+        function setCarb(s) { playWrenchSound(); currentCarb = s; updateUI('.carb-btn', 'PZ ' + s); recalculate(); }
+        function setFrontSprocket(t) { playWrenchSound(); frontSprocket = t; updateUI('.front-sprocket-btn', t + 'T'); recalculate(); }
+        function setRearSprocket(t) { playWrenchSound(); rearSprocket = t; updateUI('.rear-sprocket-btn', t + 'T'); recalculate(); }
+        function updateUI(c, txt) { document.querySelectorAll(c).forEach(b => { b.classList.remove('active'); if (b.innerText === txt) b.classList.add('active'); }); }
         function recalculate() {
-            let baseSpeed = 85;
-            let baseTorque = 55; 
-            let descParts = [];
-
-            switch(currentEngine) {
-                case 'stock_125': baseSpeed = 85; baseTorque = 55; break;
-                case 'zongshen_140': baseSpeed = 100; baseTorque = 75; break;
-                case 'daytona_140': baseSpeed = 105; baseTorque = 70; break;
-                case 'zongshen_190': baseSpeed = 115; baseTorque = 95; break;
-                case 'daytona_190': baseSpeed = 125; baseTorque = 90; break;
-            }
-
-            if (currentEngine === 'stock_125') {
-                if (currentCarb === 19) {
-                    descParts.push("<b>Топливо:</b> Сток карб 19. Стабильный запуск, ровный холостой ход.");
-                } else if (currentCarb === 22) {
-                    baseSpeed += 4; baseTorque += 2;
-                    descParts.push("<b>Топливо:</b> Карб 22. Мотору полегче дышать на верхах, чуть прибавилось динамики.");
-                } else if (currentCarb === 24) {
-                    baseSpeed += 2; baseTorque -= 4;
-                    descParts.push("<b>Топливо:</b> Карб 24. Многовато для стока, на низких оборотах при резком газе может затухать.");
-                } else if (currentCarb >= 26) {
-                    baseSpeed -= 12; baseTorque -= 20;
-                    descParts.push("<b>Топливо:</b> Диффузор огромный! Заливает свечу, мопед захлебывается, тяги нет.");
-                }
-            } 
-            else if (currentEngine.includes('140')) {
-                if (currentCarb <= 19) {
-                    baseSpeed -= 8; baseTorque -= 10;
-                    descParts.push("<b>Топливо:</b> 19-й карб жестко душит 140 кубов. Верха полностью пропали.");
-                } else if (currentCarb === 24) {
-                    baseSpeed += 5; baseTorque += 5;
-                    descParts.push("<b>Топливо:</b> 24-й диффузор — идеальный конфиг под 140сс. Отличная продувка.");
-                } else {
-                    descParts.push("<b>Топливо:</b> Конфиг рабочий, но требует точной настройки жиклеров.");
-                }
-            } 
-            else if (currentEngine.includes('190')) {
-                if (currentCarb <= 22) {
-                    baseSpeed -= 20; baseTorque -= 25;
-                    descParts.push("<b>Топливо:</b> Двигатель голодает! Маленький карб полностью убивает потенциал 190 кубов.");
-                } else if (currentCarb >= 26) {
-                    baseSpeed += 12; baseTorque += 15;
-                    descParts.push("<b>Топливо:</b> Полный разрыв! 26-27мм раскрывают мотор на 100%. Бешеный подрыв.");
-                } else {
-                    descParts.push("<b>Топливо:</b> Нормальный средний ход, едет уверенно.");
-                }
-            }
-
-            const currentRatio = rearSprocket / frontSprocket;
-            const stockRatio = 38 / 14;
-            const ratioDifference = currentRatio - stockRatio;
-
-            let sprocketSpeedModifier = 35;
-            if (currentEngine.includes('190')) sprocketSpeedModifier = 45;
-
-            baseSpeed -= ratioDifference * sprocketSpeedModifier;
-            baseTorque += ratioDifference * 65;
-
-            if (currentTires === 'road') baseSpeed += 4;
-            if (currentExhaust === 'akrapovic') { baseTorque += 6; baseSpeed += 3; } 
-            else if (currentExhaust === 'sc_project') { baseTorque += 10; baseSpeed += 1; }
-
-            let torqueLabel = "Средняя";
-            if (baseTorque > 95) torqueLabel = "Избыточная (В космос)";
-            else if (baseTorque > 78) torqueLabel = "Сумасшедшая (В угол)";
-            else if (baseTorque > 60) torqueLabel = "Бодрая";
-            else if (baseTorque < 35) torqueLabel = "Захлёб / Провал";
-
-            let speedPercent = Math.min(Math.max((baseSpeed / 140) * 100, 10), 100); 
-            let torquePercent = Math.min(Math.max(baseTorque, 10), 100);
-
-            let finalSpeed = Math.round(baseSpeed);
-            document.getElementById('val-speed').innerText = `~${finalSpeed - 3} - ${finalSpeed + 3} км/ч`;
-            document.getElementById('val-torque').innerText = torqueLabel;
-            document.getElementById('bar-speed').style.width = speedPercent + '%';
-            document.getElementById('bar-torque').style.width = torquePercent + '%';
-            
-            document.getElementById('config-desc').innerHTML = descParts.join('<br><br>');
+            let speed = 85; let torque = 55; let txt = "";
+            if (currentEngine === 'stock_125') { txt = "<b>Топливо:</b> Родной PZ 19. Стабильный сток."; }
+            else { txt = "Мотор изменен. Требует настройки."; speed = 110; torque = 80; }
+            document.getElementById('val-speed').innerText = `~${speed} км/ч`;
+            document.getElementById('bar-speed').style.width = (speed/140)*100 + '%';
+            document.getElementById('config-desc').innerHTML = txt;
         }
-
         recalculate();
     </script>
 </body>
